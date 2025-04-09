@@ -1,6 +1,9 @@
-name: CI Build
+#name: CI Build
+name: Manual Trigger Workflow
 
+# Configure Manual Trigger
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -24,18 +27,10 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Build Initial with Maven
-        working-directory: ./initial
-        run: ./mvnw --batch-mode clean package
-
-      - name: Build Initial with Gradle
-        working-directory: ./initial
-        run: ./gradlew build
-
       - name: Build Complete with Maven
         working-directory: ./complete
         run: ./mvnw --batch-mode clean package
 
-      - name: Build Complete with Gradle
+      - name: Run Complete with Maven
         working-directory: ./complete
-        run: ./gradlew build
+        run: ./mvnw spring-boot:run
